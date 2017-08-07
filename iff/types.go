@@ -14,20 +14,15 @@ import (
 // TypeID is a type-specific value for the four-byte ASCII type ID.
 type TypeID string
 
+// func (t TypeID) String() string {
+// 	return string(t)
+// }
+
 // // Well-known IFF type IDs
 // const (
-// 	Form      TypeID = "FORM"
 // 	List      TypeID = "LIST"
 // 	Cat       TypeID = "CAT "
 // 	Property  TypeID = "PROP"
-// 	Author    TypeID = "AUTH"
-// 	Copyright TypeID = "(c) "
-// )
-
-// const (
-// 	// UntilEOF is a helper used primarily by the top-level decoding function.
-// 	// Perhaps it *shouldn't* use the same interface?
-// 	UntilEOF = math.MaxUint32
 // )
 
 // ReadAtSeeker encapsulates the same functionality as io.SectionReader.
@@ -36,7 +31,6 @@ type ReadAtSeeker interface {
 	io.Reader
 	io.ReaderAt
 	io.Seeker
-	// Size() int64
 }
 
 // A Chunk is the bare minimum interface that all chuncks must provide.  Note

@@ -15,9 +15,8 @@ const (
 type authDecoder struct{}
 
 func (d *authDecoder) Decode(typeID TypeID, r *io.SectionReader, context *Decoder, logger log.FieldLogger) (Chunk, error) {
-	logger.Debug("decoding ANNO...")
-	if typeID != AuthorType {
-		return nil, fmt.Errorf("expected type ID of AUTH, got %q", typeID)
+	if err := ExpectType(AuthorType, typeID); err != nil {
+		return nil, err
 	}
 
 	length := r.Size()

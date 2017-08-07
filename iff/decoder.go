@@ -2,7 +2,9 @@ package iff
 
 import (
 	"encoding/binary"
+	"fmt"
 	"io"
+	"reflect"
 
 	log "github.com/sirupsen/logrus"
 )
@@ -57,7 +59,21 @@ func (d *Decoder) Decode(r ReadAtSeeker, logger log.FieldLogger) (Chunk, error) 
 		decoder = d.fallbackDecoder
 	}
 
+	logger.WithFields(log.Fields{
+		"typeID":  typeID,
+		"decoder": reflect.TypeOf(decoder),
+	}).Debug("decoding...")
+
 	return decoder.Decode(typeID, sr, d, logger)
+}
+
+// ExpectType is a helper for the common type ID assertion
+func ExpectType(expected TypeID, actual TypeID) error {
+	if expected == actual {
+		return nil
+	}
+
+	return fmt.Errorf("expected type ID of %q, got %q", expected, actual)
 }
 
 // ReadTypeID reads a type ID (FourCC) from the reader.

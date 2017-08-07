@@ -16,9 +16,8 @@ const (
 type ifhdDecoder struct{}
 
 func (d *ifhdDecoder) Decode(typeID iff.TypeID, r *io.SectionReader, context *iff.Decoder, logger log.FieldLogger) (iff.Chunk, error) {
-	logger.Debug("decoding IFhd...")
-	if typeID != InteractiveFictionHeaderType {
-		return nil, fmt.Errorf("expected type ID of %q, got %q", InteractiveFictionHeaderType, typeID)
+	if err := iff.ExpectType(InteractiveFictionHeaderType, typeID); err != nil {
+		return nil, err
 	}
 
 	releaseNum, err := iff.ReadUint16(r)
@@ -49,8 +48,6 @@ func (d *ifhdDecoder) Decode(typeID iff.TypeID, r *io.SectionReader, context *if
 		Checksum:       checksum,
 		ProgramCounter: pc,
 	}
-
-	logger.WithField("IFhd", c).Debug("decoded IFhd...")
 
 	return c, nil
 }

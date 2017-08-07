@@ -28,6 +28,7 @@ update-dependencies:
 
 try: build
 	./iffdump -verbose ../xyzzybot/_working-root/D647607DY/savegame.qut
+	@# ./iffdump ../xyzzybot/_working-root/D647607DY/savegame.qut
 .PHONY: try
 
 # shell:

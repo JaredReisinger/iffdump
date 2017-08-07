@@ -15,9 +15,8 @@ const (
 type copyrightDecoder struct{}
 
 func (d *copyrightDecoder) Decode(typeID TypeID, r *io.SectionReader, context *Decoder, logger log.FieldLogger) (Chunk, error) {
-	logger.Debug("decoding (c) ...")
-	if typeID != CopyrightType {
-		return nil, fmt.Errorf("expected type ID of '(c) ', got %q", typeID)
+	if err := ExpectType(CopyrightType, typeID); err != nil {
+		return nil, err
 	}
 
 	length := r.Size()

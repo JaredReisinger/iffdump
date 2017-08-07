@@ -15,9 +15,8 @@ const (
 type annoDecoder struct{}
 
 func (d *annoDecoder) Decode(typeID TypeID, r *io.SectionReader, context *Decoder, logger log.FieldLogger) (Chunk, error) {
-	logger.Debug("decoding ANNO...")
-	if typeID != AnnotationType {
-		return nil, fmt.Errorf("expected type ID of ANNO, got %q", typeID)
+	if err := ExpectType(AnnotationType, typeID); err != nil {
+		return nil, err
 	}
 
 	length := r.Size()

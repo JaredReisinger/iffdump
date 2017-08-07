@@ -27,7 +27,8 @@ func (c *Unknown) Length() int64 {
 }
 
 func (c *Unknown) String() string {
-	return fmt.Sprintf("%s (unknown, length %d)", c.typeID, c.length)
+	s := RenderBytes(c.data, 16)
+	return fmt.Sprintf("%s (unknown, length %d)\n%s", c.typeID, c.length, s)
 }
 
 // Data ...

@@ -16,9 +16,8 @@ const (
 type formDecoder struct{}
 
 func (d *formDecoder) Decode(typeID TypeID, r *io.SectionReader, context *Decoder, logger log.FieldLogger) (Chunk, error) {
-	logger.Debug("decoding FORM...")
-	if typeID != FormType {
-		return nil, fmt.Errorf("expected type ID of FORM, got %q", typeID)
+	if err := ExpectType(FormType, typeID); err != nil {
+		return nil, err
 	}
 
 	formID, err := ReadTypeID(r)

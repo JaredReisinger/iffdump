@@ -6,4 +6,5 @@ import "github.com/JaredReisinger/iffdump/iff"
 func RegisterDecoders(decoders map[iff.TypeID]iff.ChunkDecoder) {
 	decoders[InteractiveFictionHeaderType] = &ifhdDecoder{}
 	decoders[CompressedMemoryType] = &cmemDecoder{}
+	decoders[TranscriptType] = &txhsDecoder{}
 }
