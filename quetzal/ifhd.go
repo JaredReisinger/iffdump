@@ -56,10 +56,10 @@ func (d *ifhdDecoder) Decode(typeID iff.TypeID, r *io.SectionReader, context *if
 type InteractiveFictionHeader struct {
 	typeID         iff.TypeID
 	length         int64
-	ReleaseNumber  int
+	ReleaseNumber  uint16
 	SerialNumber   []byte
-	Checksum       int
-	ProgramCounter int
+	Checksum       uint16
+	ProgramCounter uint32
 }
 
 // TypeID ...

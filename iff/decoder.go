@@ -89,26 +89,38 @@ func ReadTypeID(r io.Reader) (TypeID, error) {
 // can represent a uint32 without problem.  (The only downside is that it *will*
 // allow values that a uint32 would not... but since we're currently only
 // reading the IFF, this isn't really an issue.)
-func ReadUint32(r io.Reader) (int64, error) {
+// func ReadUint32(r io.Reader) (int64, error) {
+// 	var val uint32
+// 	err := binary.Read(r, binary.BigEndian, &val)
+// 	return int64(val), err
+// }
+func ReadUint32(r io.Reader) (uint32, error) {
 	var val uint32
 	err := binary.Read(r, binary.BigEndian, &val)
-	return int64(val), err
+	return val, err
 }
 
 // ReadUint24 reads a 3-byte number (24-bit value)
-func ReadUint24(r io.Reader) (int, error) {
+func ReadUint24(r io.Reader) (uint32, error) {
 	b, err := ReadBytes(r, 3)
 	if err != nil {
 		return 0, err
 	}
-	return (int(b[0]) << 16) + (int(b[1]) << 8) + int(b[2]), nil
+	return (uint32(b[0]) << 16) + (uint32(b[1]) << 8) + uint32(b[2]), nil
 }
 
 // ReadUint16 reads a word (16-bit value)
-func ReadUint16(r io.Reader) (int, error) {
+func ReadUint16(r io.Reader) (uint16, error) {
 	var val uint16
 	err := binary.Read(r, binary.BigEndian, &val)
-	return int(val), err
+	return val, err
+}
+
+// ReadUint8 reads a word (16-bit value)
+func ReadUint8(r io.Reader) (uint8, error) {
+	var val uint8
+	err := binary.Read(r, binary.BigEndian, &val)
+	return val, err
 }
 
 // ReadString reads a string of known length
@@ -122,7 +134,7 @@ func ReadString(r io.Reader, length int64) (string, error) {
 	return string(b), err
 }
 
-// ReadBytes reads a string of known length
+// ReadBytes reads a byte "string" of known length
 func ReadBytes(r io.Reader, length int64) ([]byte, error) {
 	b := make([]byte, length)
 	_, err := io.ReadFull(r, b)

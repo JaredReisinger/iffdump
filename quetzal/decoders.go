@@ -7,4 +7,5 @@ func RegisterDecoders(decoders map[iff.TypeID]iff.ChunkDecoder) {
 	decoders[InteractiveFictionHeaderType] = &ifhdDecoder{}
 	decoders[CompressedMemoryType] = &cmemDecoder{}
 	decoders[TranscriptType] = &txhsDecoder{}
+	decoders[StacksType] = &stksDecoder{}
 }
